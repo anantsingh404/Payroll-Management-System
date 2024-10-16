@@ -1,10 +1,10 @@
-#include <iostream>    // Modern equivalent of iostream.h
-#include <fstream>     // Modern file stream handling
-#include <string>      // For using std::string instead of char arrays
-#include <iomanip>     // For setting the output format
-#include <thread>      // For using modern sleep functions
-#include <chrono>      // For using std::chrono for delays
-#include <cstdlib>     // For system() function and exit()
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <iomanip>
+#include <thread>
+#include <chrono>
+#include <cstdlib>
 using namespace std;
 
 // Struct to store employee details
@@ -14,17 +14,17 @@ struct Employee {
     float salary, tax, hra, gross, da, netPay;
 };
 
-fstream payFile;   // File stream to handle employee data
+// Global variables
+fstream payFile;
 char choice;
 
+// Function to introduce a delay
 void delay(int milliseconds) {
-    // Modern C++ way to implement delay using sleep_for()
     std::this_thread::sleep_for(std::chrono::milliseconds(milliseconds));
 }
 
-// Function to clear the console screen (Windows-specific)
+// Function to clear the console screen
 void clearScreen() {
-    // Use system() to clear the console based on OS
     #ifdef _WIN32
         system("cls");  // Windows
     #else
@@ -32,24 +32,24 @@ void clearScreen() {
     #endif
 }
 
-// Function to display the developer information with delay effect
+// Developer information display
 void dev() {
     clearScreen();
-    
-        cout << "P R O J E C T   " << endl;
-        cout<<"D E V E L O P E D  B Y  :  " << endl;
-        cout  << "ANANT VIKRAM SINGH" << endl;
+    cout << "***********************************\n";
+    cout << "       EMPLOYEE PAYROLL SYSTEM      \n";
+    cout << "   DEVELOPED BY: ANANT VIKRAM SINGH \n";
+    cout << "***********************************\n";
     cout << "PRESS ANY KEY TO CONTINUE";
-    cin.get();  
+    cin.get();
 }
 
 // Function to display the menu
 void displayMenu() {
     clearScreen();
-    cout << "\n* MENU *" << endl;
+    cout << "\n* MAIN MENU *" << endl;
     cout << "1. REPORT" << endl;
     cout << "2. PAY SLIP" << endl;
-    cout << "3. ADD" << endl;
+    cout << "3. ADD EMPLOYEE" << endl;
     cout << "4. EXIT" << endl;
     cout << "ENTER YOUR CHOICE (1, 2, 3, 4): ";
     cin >> choice;
@@ -77,13 +77,14 @@ void generateReport() {
 
     payFile.close();
     cin.get();  // Pause for user input
+    cin.get();
 }
 
 // Function to generate pay slip for a specific employee
 void generatePaySlip() {
     clearScreen();
     int searchCode, flag = 0;
-    cout << "\nEnter employee number to search: ";
+    cout << "\nEnter employee code to search: ";
     cin >> searchCode;
 
     payFile.open("employee.dat", ios::in);
@@ -119,9 +120,10 @@ void generatePaySlip() {
 
     payFile.close();
     cin.get();  // Pause for user input
+    cin.get();
 }
 
-// Function to add a new employee
+// Function to add a new employee based on type (Substaff, Clerk, Manager)
 void addEmployee() {
     Employee emp;
     char continueAdding;
@@ -149,32 +151,32 @@ void addEmployee() {
 
         switch (designationChoice) {
             case 1:
-                emp.salary = 1000;
-                emp.hra = 100;
+                emp.salary = 15000;  // Average salary for Substaff
+                emp.hra = 1000;
                 emp.da = emp.salary * 0.10;
-                emp.tax = emp.salary * 0.02;
+                emp.tax = emp.salary * 0.05;
                 emp.designation = "SUBSTAFF";
                 break;
             case 2:
-                emp.salary = 2000;
-                emp.hra = 200;
-                emp.da = 200;
-                emp.tax = emp.salary * 0.10;
+                emp.salary = 25000;  // Average salary for Clerk
+                emp.hra = 2000;
+                emp.da = emp.salary * 0.15;
+                emp.tax = emp.salary * 0.08;
                 emp.designation = "CLERK";
                 break;
             case 3:
-                emp.salary = 14000;
-                emp.hra = 400;
-                emp.da = 400;
-                emp.tax = emp.salary * 0.20;
+                emp.salary = 80000;  // Average salary for Manager
+                emp.hra = 5000;
+                emp.da = emp.salary * 0.20;
+                emp.tax = emp.salary * 0.15;
                 emp.designation = "MANAGER";
                 break;
             default:
                 cout << "Invalid input, setting default salary for SUBSTAFF." << endl;
-                emp.salary = 1000;
-                emp.hra = 100;
+                emp.salary = 15000;
+                emp.hra = 1000;
                 emp.da = emp.salary * 0.10;
-                emp.tax = emp.salary * 0.02;
+                emp.tax = emp.salary * 0.05;
                 emp.designation = "SUBSTAFF";
                 break;
         }
